@@ -1,0 +1,25 @@
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>nom</th>
+        <th>prenom</th>
+        <th>role</th>
+		<th>email</th>
+		<th></th>
+		<th></th>
+		<th></th>
+		<th></th>
+      </tr>
+    </thead>
+    <tbody>
+	  {% for user in users %}
+      <tr>
+        <td>{{user.nom}}</td>
+        <td>{{user.prenom}}</td>
+        <td>{{user.roles}}</td>
+		<td>{{user.email}}</td>
+		
+      </tr> 
+	{% endfor %}	  
+    </tbody>
+</table>	
