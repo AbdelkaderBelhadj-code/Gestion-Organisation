@@ -3,23 +3,35 @@
 		<div class="alert alert-warning">{{ mesage }}</div>
 	{% endif %}
 	<div class="form-group">
-		<label for="name">Nom:</label>
+		<label for="name">nom:</label>
 		<input type="text" class="form-control" id="nom" name="nom" value="{{ editUser.nom }}">
 	</div>
     <div class="form-group">
-		<label for="name">Prenom:</label>
-		<input type="text" class="form-control" id="nom" name="nom" value="{{ editUser.nom }}">
+		<label for="name">prenom:</label>
+		<input type="text" class="form-control" id="prenom" name="prenom" value="{{ editUser.prenom }}">
 	</div>
-	<div class="form-group">
-		<label for="role">Role:</label>
-		<select class="form-control" id="role" name="role">
-			<option value="admin" {% if editUser.roles == 'SuperAdmin' %}selected{% endif %}>SuperAdmin</option>
-            <option value="admin" {% if editUser.roles == 'AdminOrg' %}selected{% endif %}>AdminOrg</option>
-			<option value="user"  {% if editUser.roles == 'user' %}selected{% endif %}>User</option>			
-		</select>
+    <div class="form-group">
+		<label for="name">password:</label>
+		<input type="text" class="form-control" id="password" name="password" value="{{ editUser.password }}">
+	</div>
+    <div class="form-group">
+		<label for="name">email:</label>
+		<input type="email" class="form-control" id="email" name="email" value="{{ editUser.email }}">
+	</div>
+    <div class="form-group">
+		<label for="name">date:</label>
+		<input type="email" class="form-control" id="date_adhesion" name="date_adhesion" value="{{ editUser.date_adhesion }}">
+	</div>
+    <div class="form-group">
+		<label for="name">tel:</label>
+		<input type="tel" class="form-control" id="tel" name="tel" value="{{ editUser.tel }}">
+	</div>
+    <div class="form-group">
+		<label for="name">avatar_photo:</label>
+		<input type="text" class="form-control" id="avatar_photo" name="avatar_photo" value="{{ editUser.avatar_photo }}">
 	</div>
 
-		
-	<input type="hidden" id="userid" name="userid" value="{{ editUser.id }}">
+	
+	<input type="hidden" id="id" name="id" value="{{ editUser.id }}">
 	<button type="submit" class="btn btn-primary">Save</button>		
 </form>

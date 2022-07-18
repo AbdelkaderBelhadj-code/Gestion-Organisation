@@ -19,7 +19,7 @@ CORS(app)
 host='localhost'
 user='root'
 passwd=''
-database='organisations'
+database='organisation'
 #variables for my database in order to connect
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://'+user+':'+passwd+'@'+host+'/'+database
@@ -28,12 +28,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
 db = SQLAlchemy(app) 
 
-class UserRoleEnum(enum.Enum):
-    superAdmin = 'SuperAdmin'
-    adminOrg = 'AdminOrg'
-    user = 'user'
- 
-# Espace - Table
+# class UserRoleEnum(enum.Enum):
+#     superAdmin = 'SuperAdmin'
+#     adminOrg = 'AdminOrg'
+#     user = 'user'
+
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -45,23 +44,32 @@ class User(db.Model, UserMixin):
     tel = db.Column(db.Integer,nullable=False)
 
     avatar_photo = db.Column(db.String(100), nullable=False, server_default=u' ')
+    roles = db.relationship('Role', secondary='users_roles',
+                            backref=db.backref('users',
+                                               lazy='dynamic'))
+    def __init__(self, nom, prenom, password, email, date_adhesion, tel, avatar_photo, roles):
 
-    # role
-    roles = db.Column(db.Enum(UserRoleEnum), nullable=False)
+        self.nom = nom
+        self.prenom = prenom
+        self.password = password
+        self.email = email
+        self.date_adhesion = date_adhesion
+        self.tel = tel
+        self.avatar_photo = avatar_photo
+        self.roles = roles
+
+        
+class Role(db.Model):
+    __tablename__ = 'roles'
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(50), unique=True)
+# UserRoles - Table
+class UserRoles(db.Model):
+    __tablename__ = 'users_roles'
+    user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'), primary_key=True)
+    role_id = db.Column(db.Integer(), db.ForeignKey('roles.id', ondelete='CASCADE'), primary_key=True)
 
 
-def __init__(self, nom, prenom,email, password,date_adhesion,tel,avatar_photo, roles):
-       self.nom = nom
-       self.prenom = prenom
-       self.email = email
-       self.password = password
-       self.date_adhesion = date_adhesion
-       self.tel = tel
-       self.avatar_photo = avatar_photo
-       self.roles = roles
-
-def __repr__(self):
-       return f"User: {self.nom}, {self.email}, {self.roles}, {self.prenom}, {self.password}, {self.date_adhesion}, {self.tel}, {self.avatar_photo}, {self.roles}"
 
 
 # Espacclass Event(db.Model):
